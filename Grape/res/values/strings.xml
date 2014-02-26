@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Grape</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+	
+    <string name="iv_grape">りんご</string>
+    <string name="tv_fruit">-----</string>
+    <string name="bt_back">前の画面に戻る</string>
+</resources>
