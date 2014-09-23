@@ -1,0 +1,277 @@
+CREATE TABLE Permission (
+    permissionId INT(2) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    name VARCHAR(15) NOT NULL
+);
+
+CREATE TABLE Address (
+    addressId BIGINT(10) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    country VARCHAR(20) NOT NULL,
+    province VARCHAR(20),
+    city VARCHAR(20),
+    si VARCHAR(20),
+    gu VARCHAR(20),
+    dong VARCHAR(20)
+);
+
+CREATE TABLE User (
+    userId BIGINT(10) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    email VARCHAR(30) UNIQUE NOT NULL,
+    password VARCHAR(10) NOT NULL,
+    nick VARCHAR(20) UNIQUE NOT NULL,
+     countrycode int(4),
+     phone VARCHAR(15) NOT NULL,
+    addressId BIGINT(10) NOT NULL,
+    detailAddr01 VARCHAR(100) NOT NULL,
+    postcode VARCHAR(10) NOT NULL,
+    facebookPermission INT(2) default 0,
+    permissionId INT(2) NOT NULL,
+    lastUpdated timestamp,
+    deleted timestamp,
+
+    FOREIGN KEY(addressId)
+        REFERENCES Address(addressId)
+        ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY(permissionId)
+        REFERENCES Permission(permissionId)
+);
+
+CREATE TABLE Company (
+    companyId INT(10) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    logoImgUrl VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE CategoryDef (
+    categoryDefid INT(5) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    name VARCHAR(100) NOT NULL
+);
+CREATE TABLE ProductDef (
+    productDefid INT(5) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE CategorySet (
+	categorySetid INT(5) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+
+	categoryDefid INT(5) NOT NULL,
+	companyId INT(10),
+	productDefid INT(5),
+	classify VARCHAR(10),
+
+	FOREIGN KEY(categoryDefid)
+	REFERENCES CategoryDef(categoryDefid)
+	ON UPDATE CASCADE ON DELETE RESTRICT,
+	FOREIGN KEY(productDefid)
+	REFERENCES ProductDef(productDefid)
+	ON UPDATE CASCADE ON DELETE RESTRICT,
+	FOREIGN KEY(companyId)
+	REFERENCES Company(companyId)
+	ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+CREATE TABLE Paper (
+    paperId BIGINT(10) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    companyId INT(10),
+    categorySetid INT(5),
+    title VARCHAR(200) NOT NULL,
+    barcode INT(10),
+    originalUrl TEXT NOT NULL,
+    manualUrl VARCHAR(200) NOT NULL,
+    frontImgUrl VARCHAR(200) NOT NULL,
+    manufacturedId VARCHAR(100) NOT NULL,
+    year YEAR,
+    description TEXT,
+    userId BIGINT(10),
+    language VARCHAR(5) NULL,
+    lastUpdated timestamp,
+
+    FOREIGN KEY(companyId)
+        REFERENCES Company(companyId)
+        ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY(categorySetid)
+        REFERENCES CategorySet(categorySetid)
+        ON UPDATE CASCADE ON DELETE RESTRICT
+--    ,
+--    FOREIGN KEY(userId)        
+--        REFERENCES User(userId)
+--        ON UPDATE CASCADE ON DELETE RESTRICT
+
+);
+
+CREATE TABLE MyList (
+    userId BIGINT(10) NOT NULL,
+    paperId BIGINT(10) NOT NULL,
+    lastUpdated timestamp,
+
+    FOREIGN KEY(userId)    
+         REFERENCES User(userId)
+         ON UPDATE CASCADE ON DELETE RESTRICT,
+    
+    FOREIGN KEY(paperId)
+         REFERENCES Paper(paperId)    
+         ON UPDATE CASCADE ON DELETE RESTRICT
+
+);
+
+CREATE TABLE LikeView (
+    paperId BIGINT(10) NOT NULL,
+    likeCount INT(10) NOT NULL,
+    viewCount INT(10) NOT NULL,
+    lastUpdated timestamp,
+
+     FOREIGN KEY(paperId)
+         REFERENCES Paper(paperId)    
+         ON UPDATE CASCADE ON DELETE RESTRICT
+
+);
+
+CREATE TABLE LikeHistory (
+    userId BIGINT(10) NOT NULL,
+    paperId BIGINT(10) NOT NULL,
+    lastUpdated timestamp,
+
+ FOREIGN KEY(userId)
+ 
+     REFERENCES User(userId)
+ 
+     ON UPDATE CASCADE ON DELETE RESTRICT,
+ 
+ FOREIGN KEY(paperId)
+ 
+     REFERENCES Paper(paperId)
+ 
+     ON UPDATE CASCADE ON DELETE RESTRICT
+
+);
+
+CREATE TABLE ViewHistory (
+    userId BIGINT(10) NOT NULL,
+    paperId BIGINT(10) NOT NULL,
+    lastUpdated timestamp,
+
+ FOREIGN KEY(userId)
+ 
+     REFERENCES User(userId)
+ 
+     ON UPDATE CASCADE ON DELETE RESTRICT,
+ 
+ FOREIGN KEY(paperId)
+ 
+     REFERENCES Paper(paperId)
+ 
+     ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+
+CREATE TABLE BookmarkHistory (
+
+	userId bigint(10),
+	paperId bigint(10),
+	status int(2) default 0,
+    lastUpdated TIMESTAMP,
+	PRIMARY KEY(userId,paperId),
+    FOREIGN KEY(userId)
+        REFERENCES User(userId)
+        ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY(paperId)
+        REFERENCES Paper(paperId)
+        ON UPDATE CASCADE ON DELETE RESTRICT
+
+);
+
+
+=======================
+Log Tables
+=======================
+
+CREATE TABLE FixReport (
+    userId BIGINT(10) NOT NULL,
+    paperId BIGINT(10) NOT NULL,
+    contents TEXT,
+    created timestamp,
+
+ FOREIGN KEY(userId)
+ 
+     REFERENCES User(userId)
+ 
+     ON UPDATE CASCADE ON DELETE RESTRICT,
+ FOREIGN KEY(paperId)
+ 
+     REFERENCES Paper(paperId)
+ 
+     ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+CREATE TABLE SearchLog (
+    searchId BIGINT(10) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    userId BIGINT(10) NOT NULL,
+    keywords VARCHAR(100) NOT NULL,
+    created timestamp,
+ FOREIGN KEY(userId)
+ 
+     REFERENCES User(userId)
+ 
+     ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+CREATE TABLE RequestLog (
+    userId BIGINT(10) NOT NULL,
+    contents TEXT NOT NULL,
+    created timestamp,
+    
+ FOREIGN KEY(userId)
+ 
+     REFERENCES User(userId)
+ 
+     ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+CREATE TABLE tmpPaper (
+
+    companyId INT(10),
+
+    categorySetid INT(5),
+
+    title VARCHAR(200) NOT NULL,
+
+    barcode INT(10),
+
+    originalUrl TEXT NOT NULL,
+
+    manualUrl VARCHAR(200) NOT NULL,
+
+    frontImgUrl VARCHAR(200) NOT NULL,
+
+    manufacturedId VARCHAR(100) NOT NULL,
+
+    year YEAR,
+
+    description TEXT,
+
+    userId BIGINT(10),
+
+    language VARCHAR(5) NULL,
+
+    lastUpdated timestamp,
+
+    PRIMARY KEY(companyId,categorySetid,manufacturedId),
+
+    FOREIGN KEY(companyId)
+
+        REFERENCES Company(companyId)
+
+        ON UPDATE CASCADE ON DELETE RESTRICT,
+
+    FOREIGN KEY(categorySetid)
+
+        REFERENCES CategorySet(categorySetid)
+
+        ON UPDATE CASCADE ON DELETE RESTRICT
+
+    -- FOREIGN KEY(userId)
+    --
+    -- REFERENCES User(userId)
+    --
+    -- ON UPDATE CASCADE ON DELETE RESTRICT
+
+);

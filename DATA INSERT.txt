@@ -1,0 +1,161 @@
+use mPaper2
+
+CREATE TABLE Company (
+
+    companyId INT(10) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+
+    name VARCHAR(100) NOT NULL,
+
+    logoImgUrl VARCHAR(255) NOT NULL
+
+);
+
+CREATE TABLE CategoryDef (
+    categoryDefid INT(5) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    name VARCHAR(100) NOT NULL
+);
+CREATE TABLE ProductDef (
+    productDefid INT(5) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE CategorySet (
+    categorySetid INT(5) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    
+    categoryDefid INT(5) NOT NULL,
+    productDefid INT(5) NOT NULL,
+    
+ FOREIGN KEY(categoryDefid)
+ 
+   		 REFERENCES CategoryDef(categoryDefid)
+         ON UPDATE CASCADE ON DELETE RESTRICT,
+ FOREIGN KEY(productDefid)
+         REFERENCES ProductDef(productDefid)
+         ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+CREATE TABLE Paper (
+
+    paperId BIGINT(10) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+
+    companyId INT(10),
+
+    categorySetid INT(5),
+
+    name VARCHAR(200) NOT NULL,
+
+    barcode INT(10),
+
+    originalUrl TEXT NOT NULL,
+
+    manualUrl VARCHAR(200) NOT NULL,
+
+    frontImgUrl VARCHAR(200) NOT NULL,
+
+    manufacturedId VARCHAR(100) NOT NULL,
+
+    year YEAR,
+
+    description TEXT,
+
+    userId BIGINT(10),
+
+    language VARCHAR(5) NULL,
+
+    lastUpdated timestamp,
+
+
+    FOREIGN KEY(companyId)
+
+        REFERENCES Company(companyId)
+
+        ON UPDATE CASCADE ON DELETE RESTRICT,
+
+    FOREIGN KEY(categorySetid)
+
+        REFERENCES CategorySet(categorySetid)
+
+        ON UPDATE CASCADE ON DELETE RESTRICT
+
+	-- FOREIGN KEY(userId)
+    -- 
+	-- REFERENCES User(userId)
+    --
+	-- ON UPDATE CASCADE ON DELETE RESTRICT
+
+);
+
+---Paper 임시 테이블 (입력 속도를 향상을 위해 만듬)
+
+CREATE TABLE tmpPaper (
+
+    companyId INT(10),
+
+    categorySetid INT(5),
+
+    name VARCHAR(200) NOT NULL,
+
+    barcode INT(10),
+
+    originalUrl TEXT NOT NULL,
+
+    manualUrl VARCHAR(200) NOT NULL,
+
+    frontImgUrl VARCHAR(200) NOT NULL,
+
+    manufacturedId VARCHAR(100) NOT NULL,
+
+    year YEAR,
+
+    description TEXT,
+
+    userId BIGINT(10),
+
+    language VARCHAR(5) NULL,
+
+    lastUpdated timestamp,
+
+	PRIMARY KEY(companyId,categorySetid,manufacturedId),
+
+    FOREIGN KEY(companyId)
+
+        REFERENCES Company(companyId)
+
+        ON UPDATE CASCADE ON DELETE RESTRICT,
+
+    FOREIGN KEY(categorySetid)
+
+        REFERENCES CategorySet(categorySetid)
+
+        ON UPDATE CASCADE ON DELETE RESTRICT
+
+	-- FOREIGN KEY(userId)
+    -- 
+	-- REFERENCES User(userId)
+    --
+	-- ON UPDATE CASCADE ON DELETE RESTRICT
+
+);
+
+데이터 INSERT
+------------------------------------------------------------------------
+INSERT INTO Company (name,logoImgUrl)  VALUES ('Lego','A');
+INSERT INTO CategoryDef (name)  VALUES ('Toy'),
+										('Furniture'),
+										('Phone'),
+										('Printer'),
+										('etc');
+
+INSERT INTO ProductDef (name)  VALUES ('');
+
+
+INSERT INTO CategorySet(categoryDefid,productDefid)
+	SELECT k1.categoryDefid,k2.productDefid
+	FROM CategoryDef AS k1
+	CROSS JOIN ProductDef AS k2;
+
+
+테이블 삭제
+------------------------------------------------------------------------
+
+
