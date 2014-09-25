@@ -139,14 +139,26 @@ CREATE TABLE tmpPaper (
 
 데이터 INSERT
 ------------------------------------------------------------------------
-INSERT INTO Company (name,logoImgUrl)  VALUES ('Lego','A');
-INSERT INTO CategoryDef (name)  VALUES ('Toy'),
-										('Furniture'),
-										('Phone'),
-										('Printer'),
-										('etc');
+INSERT INTO Company (name,logoImgUrl)  VALUES ('Lego','A'),
+										('Leapfrog','A'),	
+										('IKEA','A'),		
+										('Nikon','A'),		
+										('Fuji','A'),		
+										('Samsung','A'),		
+										('Sony','A'),		
+										('HP','A');
 
-INSERT INTO ProductDef (name)  VALUES ('');
+
+INSERT INTO CategoryDef (name,colorCode)  VALUES ('Most Viewed','#000000'),
+										('Most Bookmarked','#000000'),
+										('Most Updated','#000000'),
+										('Toy','#000000'),
+										('Furniture','#000000'),
+										('Electronics','#000000');
+
+
+INSERT INTO ProductDef (name)  VALUES ('Camera'),
+									  ('Printer');
 
 
 INSERT INTO CategorySet(categoryDefid,productDefid)

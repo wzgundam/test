@@ -43,7 +43,8 @@ CREATE TABLE Company (
 
 CREATE TABLE CategoryDef (
     categoryDefid INT(5) PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    name VARCHAR(100) NOT NULL
+    name VARCHAR(100) NOT NULL,
+    colorCode VARCHAR(11)
 );
 CREATE TABLE ProductDef (
     productDefid INT(5) PRIMARY KEY AUTO_INCREMENT NOT NULL,
