@@ -1,2 +1,12 @@
 http://java-script.seesaa.net/category/3411441-1.html
 http://www.html5.jp/library/
+http://www.webmadang.net/javascript/javascript.do?action=read&boardid=8001&page=6&seq=324
+https://google-developers.appspot.com/chart/interactive/docs/gallery/barchart
+http://blackfrost.blog.me/40210784439
+http://www.ajaxtower.jp/googlechart/
+
+javascript path Žæ“¾
+http://erax.blog.fc2.com/blog-entry-70.html
+
+
+database.Open("Driver={Microsoft Access Driver (*.mdb)}; DBQ=C:\\Users\\EF151\\Desktop\\SampleDB010\\SampleDB010.mdb;");
