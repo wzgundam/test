@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+        ['Genre', 'AA', 'BB', 'CC', { role: 'annotation' } ],
+        ['A', 100, 0, 0, ''],
+        ['B', 60, 20, 20,''],
+        ['C', 30, 30, 40, ''],
+        ['D', 50, 25, 25, '']
+      ]);
+
+       var formatter1 = new google.visualization.NumberFormat({pattern: '###%'}); 
+       formatter1.format(data, 1);
+      
+       var formatter2 = new google.visualization.NumberFormat({pattern: '###%'}); 
+       formatter2.format(data, 2);
+       
+       var formatter3 = new google.visualization.NumberFormat({pattern: '###%'}); 
+       formatter3.format(data, 3);       
+
+      var options = {
+        width: 1080,
+        height: 400,
+        legend: { position: 'top',alignment:'center', maxLines: 3 },
+        bar: { groupWidth: '75%' },
+        isStacked: true,
+        hAxis: {gridlines:{count:9}}
+      };
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+  <body>
+    <div id="chart_div" style="align:middle; width: 1080px; height: 500px;"></div>
+  </body>
+</html>
