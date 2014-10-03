@@ -6,11 +6,11 @@
       google.setOnLoadCallback(drawChart);
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-        ['Genre', 'AA', 'BB', 'CC', { role: 'annotation' } ],
-        ['A', 100, 0, 0, ''],
-        ['B', 60, 20, 20,''],
-        ['C', 30, 30, 40, ''],
-        ['D', 50, 25, 25, '']
+        ['', 'ê≥ìö', 'åÎìö', 'ñ≥âÒìö', { role: 'annotation' }],
+        ['Aëw', 1,null,null,''],
+        ['Bëw', 0.98, 0.02,null,''],
+        ['Cëw', 0.3, 0.3, 0.4,''],
+        ['Dëw', 0.5, 0.25, 0.25,'']
       ]);
 
        var formatter1 = new google.visualization.NumberFormat({pattern: '###%'}); 
@@ -20,7 +20,28 @@
        formatter2.format(data, 2);
        
        var formatter3 = new google.visualization.NumberFormat({pattern: '###%'}); 
-       formatter3.format(data, 3);       
+       formatter3.format(data, 3);    
+       
+      var view = new google.visualization.DataView(data);
+      
+                       
+          view.setColumns([0, 1,
+                       { calc: "stringify",
+                         sourceColumn: 1,
+                         type: "string",
+                         role: "annotation" },
+					   2,
+                       { calc: "stringify",
+                         sourceColumn: 2,
+                         type: "string",
+                         role: "annotation" },
+					   3,
+                       { calc: "stringify",
+                         sourceColumn: 3,
+                         type: "string",
+                         role: "annotation" }
+                       ]);                             
+                       
 
       var options = {
         width: 1080,
@@ -28,15 +49,29 @@
         legend: { position: 'top',alignment:'center', maxLines: 3 },
         bar: { groupWidth: '75%' },
         isStacked: true,
-        hAxis: {gridlines:{count:9}}
+        hAxis: {baseline:0,baselineColor:'black',gridlines:{color:'black',count:11},format: '###%'},
+        vAxis: {baseline:0,baselineColor:'black'}
+        //colors : ["#76A7FA","#703593","#871B47", "#000000"]
+        //backgroundColor:{stroke:'black',strokeWidth:1}
+        
+        
       };
         var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
 
-        chart.draw(data, options);
+        //chart.draw(data, options);
+        chart.draw(view, options);
       }
     </script>
   </head>
   <body>
-    <div id="chart_div" style="align:middle; width: 1080px; height: 500px;"></div>
+  		<center>
+  		<TABLE BORDER="1" CELLSPACING="0" CELLPADDING="1" bordercolor="66FF99">
+  			<TR>
+  				<TD align="center">
+    			<div id="chart_div" style="width: 1080px; height: 400px;"></div>
+    			</TD>
+    		</TR>
+		</TABLE>
+		</center>    
   </body>
 </html>
