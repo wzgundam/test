@@ -4,10 +4,30 @@ http://www.webmadang.net/javascript/javascript.do?action=read&boardid=8001&page=
 https://google-developers.appspot.com/chart/interactive/docs/gallery/barchart
 http://blackfrost.blog.me/40210784439
 http://www.ajaxtower.jp/googlechart/
-http://yohshiy.blog.fc2.com/blog-entry-195.html
 
 javascript path 取得
 http://erax.blog.fc2.com/blog-entry-70.html
 
 
+google charts
+http://yohshiy.blog.fc2.com/blog-entry-195.html
+
+???? ??? ??? ??
+http://phm0515.blog.me/20196990054
+
+google chart 生成
+http://www.jonwinstanley.com/charts/
+
+各ブラウザでJavaScriptを無効にする
+http://qiita.com/ha_g1/items/a227731ebea961e8b4e2
+
+javascript 入門
+http://www.ajaxtower.jp/js/browser/index2.html
+http://www.pori2.net/js/kihon/1.html
+
+
+
 database.Open("Driver={Microsoft Access Driver (*.mdb)}; DBQ=C:\\Users\\EF151\\Desktop\\SampleDB010\\SampleDB010.mdb;");
+
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="graph.js"></script>
